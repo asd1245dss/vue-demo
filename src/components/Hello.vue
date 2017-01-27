@@ -1,7 +1,11 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <h1 v-if="msg.length > 1" @click="changeMsg">{{ msg }}</h1>
+    <h1>{{ msg.split('').reverse().join('') | capitalize  }}</h1>
+    <h2 v-html="title"></h2>
+    <label>
+      <input v-model.lazy="msg">
+    </label>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
@@ -25,7 +29,23 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      title: '<sub>菜鸟教程</sub>'
+    }
+  },
+  methods: {
+    changeMsg: function () {
+      this.msg = '修改'
+    }
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) {
+        return ''
+      } else {
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
     }
   }
 }
